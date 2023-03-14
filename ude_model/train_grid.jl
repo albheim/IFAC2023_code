@@ -20,7 +20,7 @@ function train_point_and_eval_grid(
 
     logfolder = joinpath(@__DIR__, "..", "data", datafolder)
 
-    basename = "data_$(use_fluid ? "fluid_" : "")$(use_nn ? "nn$(fluid_net ? "fnet" : "$(flowconstrained ? "fc" : modelconstrained ? "mc" : "")_hu$(hidden_units)_hl$(hidden_layers)")_mi$(ql_maxiters)" : "")_p$(train_p)_hist$(hist_p)_$(tag)"
+    basename = "data$(use_fluid ? "_fluid" : "")$(use_nn ? "_nn$(fluid_net ? "fnet" : "$(flowconstrained ? "fc" : modelconstrained ? "mc" : "")_hu$(hidden_units)_hl$(hidden_layers)")_mi$(ql_maxiters)" : "")_p$(train_p)$(use_nn ? "_hist$(hist_p)" : "")_$(tag)"
 
     datafile = joinpath(logfolder, basename * ".csv")
 
