@@ -4,7 +4,7 @@ include("train_grid.jl")
 
 p_train = 0.6
 
-params = train_point_and_eval_grid(p_train, 0.1:0.2:1.0; ql_maxiters=200, tag="test_opt2", seed=1)
+params = train_point_and_eval_grid(p_train, 0.1:0.2:1.0; ql_maxiters=500, use_fluid=true, use_nn=true, modelconstrained=true, hidden_units=20, hidden_layers=2, tag="test_opt2", seed=1)
 
 losses = []
 pss = []
@@ -21,8 +21,8 @@ pw = [log(p_train/(1-p_train)), 0]
 optprob1 = OptimizationProblem(optf, pw, params)
 optsol1 = solve(optprob1, ADAM(0.1), maxiters=10, callback=callback2)
 
-optprob2 = OptimizationProblem(optf, optsol1.u, params)
-optsol2 = solve(optprob2, BFGS(), maxiters=10, callback=callback2)
+#optprob2 = OptimizationProblem(optf, optsol1.u, params)
+#optsol2 = solve(optprob2, BFGS(), maxiters=10, callback=callback2)
 
 p_target = softmax(optsol2)[1]
 
@@ -49,7 +49,7 @@ pred = [
 
 
 basepath = joinpath(@__DIR__, "..", "data")
-runid = "logs_grid_p05_no_edge"
+runid = "logs"
 
 datatag = "fluid_only_retrain"
 realdata = CSV.File(joinpath(basepath, runid, "data_$(datatag).csv"))
