@@ -1,7 +1,7 @@
 using PyPlot, CSV
 
 basepath = joinpath(@__DIR__, "..", "data")
-runid = "logs_grid_p05_no_edge"
+runid = "logs"
 
 datatag = "fluid_only_retrain"
 realdata = CSV.File(joinpath(basepath, runid, "data_$(datatag).csv"))
@@ -120,28 +120,14 @@ savefig(joinpath(basepath, runid, "plot_$(tag).png"))
 ## Plotting time series
 
 basepath = joinpath(@__DIR__, "..", "data")
-runid = "logs_grid_p05_no_edge"
+runid = "logs"
 
 tags = [
-    #"fluid_nnfc_hu20_hl0_mi200_p0.6_hist0.1:0.2:0.9_timing",
-    "fluid_nn_hu20_hl0_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "nn_hu20_hl0_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "fluid_nnfc_hu20_hl0_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "fluid_nnmc_hu20_hl0_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "fluid_nn_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "nn_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "fluid_nnfc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "fluid_nnmc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    #"fluid_nnmc_hu20_hl0_mi200_p0.6_hist0.1:0.2:0.9_testing_new_mc",
-    #"fluid_nn_hu20_hl0_mi200_p0.6_hist0.1:0.2:0.9_timing",
-    #"nn_hu20_hl0_mi200_p0.6_hist0.1:0.2:0.9_timing",
-    #"fluid_nnfc_hu40_hl2_mi200_p0.6_hist0.1:0.2:0.9_timing",
-    #"fluid_nn_hu40_hl2_mi200_p0.6_hist0.1:0.2:0.9_timing",
-    #"nn_hu40_hl2_mi200_p0.6_hist0.1:0.2:0.9_timing",
-    #"fluid_nnfc_hu10_hl1_mi200_p0.6_hist0.1:0.2:0.9_small",
-    #"fluid_nnfc_hu5_hl1_mi200_p0.6_hist0.1:0.2:0.9_smaller",
-    #"fluid_nnfc_hu10_hl0_mi200_p0.6_hist0.1:0.2:0.9_smaller",
-    #"nn_hu20_hl1_mi500_p0.6_hist0.1:0.2:0.9_longer",
+    "fluid_nnmc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_v1_i1",
+    "fluid_nnmc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_v1_i2",
+    "fluid_nnmc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_v1_i3",
+    "fluid_nnmc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_v1_i4",
+    "fluid_nnmc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_v1_i5",
 ]
     
 datas = [CSV.File(joinpath(basepath, runid, "data_$(tag)_timingdata.csv")) for tag in tags]
@@ -169,6 +155,20 @@ end
 gcf()
 
 
+# if not yet done
+begin
+    figure(23424, figsize=(10.0, 8.0))
+    clf()
+    for i in eachindex(datas)
+        semilogy(datas[i].loss, "C$(i):")
+    end
+    #xlim([0, 1])
+    #ylim([0.9*minimum(cost_data), 1.1*maximum(cost_data)])
+    title("Loss")
+    legend()
+end
+
+gcf()
 
 # foreach(tags) do tag
 #     fname = joinpath(basepath, runid, "data_$(tag)_timingdata.csv")

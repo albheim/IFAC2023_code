@@ -1,5 +1,0 @@
-tracefolder: "/local/home/albheim/git/queuemodelinference/online_autodiff_2/../data/logs_grid_p05_no_edge/traces/sample18"
-logfolder: "/local/home/albheim/git/queuemodelinference/online_autodiff_2/../data/logs_grid_p05_no_edge"
-p0:
-  - 1.9550584652852707
-  - 0.2449415347147258
