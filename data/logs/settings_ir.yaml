@@ -1,0 +1,34 @@
+asyncioMaxCon: 250
+connections: 0
+experimentTime:
+- 1649784965.8817916
+- 1649791365.8817916
+id_nbr: '105114'
+id_str: ir
+loadType: open
+logFile: load_generator_ir.csv
+settingsFile: settings_ir.yaml
+simSecDur:
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 300
+- 400
+simTime: 6400
+url: http://10.0.1.196:32222/detect/
