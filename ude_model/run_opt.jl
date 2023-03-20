@@ -1,10 +1,10 @@
-using PyPlot, CSV
-
 include("train_grid.jl")
 
 p_train = 0.6
 
-params = train_point_and_eval_grid(p_train, 0.1:0.2:1.0; ql_maxiters=500, use_fluid=true, use_nn=true, modelconstrained=true, hidden_units=20, hidden_layers=2, tag="test_opt2", seed=1)
+tag="v1_opt"
+
+params = train_point_and_eval_grid(p_train, 0.1:0.2:1.0; ql_maxiters=500, use_fluid=true, use_nn=true, modelconstrained=true, hidden_units=20, hidden_layers=2, tag, seed=1)
 
 losses = []
 pss = []
@@ -20,6 +20,7 @@ optf = OptimizationFunction(costfunc_ql, Optimization.AutoForwardDiff())
 pw = [log(p_train/(1-p_train)), 0]
 optprob1 = OptimizationProblem(optf, pw, params)
 optsol1 = solve(optprob1, ADAM(0.1), maxiters=10, callback=callback2)
+optsol2 = optsol1
 
 #optprob2 = OptimizationProblem(optf, optsol1.u, params)
 #optsol2 = solve(optprob2, BFGS(), maxiters=10, callback=callback2)
@@ -51,27 +52,8 @@ pred = [
 basepath = joinpath(@__DIR__, "..", "data")
 runid = "logs"
 
-datatag = "fluid_only_retrain"
-realdata = CSV.File(joinpath(basepath, runid, "data_$(datatag).csv"))
-
-figure(32)
-clf()
-subplot(1, 3, 1)
-plot(ps, map(x -> x.ql, pred), label="ql")
-plot(ps, realdata.ql_data, label="ql")
-subplot(1, 3, 2)
-plot(ps, map(x -> x.p95, pred), label="p95")
-plot(ps, realdata.p95_data, label="ql")
-subplot(1, 3, 3)
-plot(ps, map(x -> x.cost, pred), label="cost")
-plot(ps, realdata.cost_data, label="ql")
-plot(pss, losses, label="ql", marker="+")
-
-gcf()
-
-
 CSV.write(
-    joinpath(basepath, runid, "optdata_p_200iter.csv"),
+    joinpath(basepath, runid, "optpath_$tag.csv"),
     (
         p = pss,
         cost = losses,
@@ -81,7 +63,7 @@ CSV.write(
 )
 
 CSV.write(
-    joinpath(basepath, runid, "data_fluid_nnfc_hu20_hl0_mi200_optrun.csv"),
+    joinpath(basepath, runid, "same_as_v1_opt_or.csv"),
     (
         p = ps,
         ql = map(x -> x.ql, pred),

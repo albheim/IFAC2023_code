@@ -22,6 +22,16 @@ The cost-minimizing algorithm is implemented in `Julia` and  tested with `Julia 
 
 ##### Training the model
 
+The file `run_train.jl` can be called to train the model with varying configurations, e.g. from the `ude_model` folder call
+```bash
+julia --project run_train.jl --use_fluid --use_nn --mc --hl=2 --hu=20 --mi=500 --tag=test --reps=5
+```
+to run an experiment using the fluid model as base and extending it with the model constrained NN where the NN has 2 extra hidden layers in addition to the required 1, each hidden layer has 20 units and we run it for 500 training iterations over 5 repeated runs.
 
 ##### Evaluating the model 
 
+Using the scripts `plotting.jl` and `plotting_series.jl` we can visualize the recorded data by inserting the filenames without the `data_` in the start or the `.csv` ending into the `tags` array.
+
+They have been used interactively in the REPL, and for running as scripts some modifications would be needed.
+
+We can also try to run the controller using a trained model to see how it will optimize the control parameters, and is done by running `run_opt.jl`. To change parameters of the run for this script you will have to edit the code, specifically the call to `train_point_and_eval_grid` in the start decides many of the interesting parameters.
