@@ -2,7 +2,7 @@ include("train_grid.jl")
 
 p_train = 0.6
 
-tag="v1_opt"
+tag="v1"
 
 params = train_point_and_eval_grid(p_train, 0.1:0.2:1.0; ql_maxiters=500, use_fluid=true, use_nn=true, modelconstrained=true, hidden_units=20, hidden_layers=2, tag, seed=1)
 
@@ -53,7 +53,7 @@ basepath = joinpath(@__DIR__, "..", "data")
 runid = "logs"
 
 CSV.write(
-    joinpath(basepath, runid, "optpath_$tag.csv"),
+    joinpath(basepath, runid, "data_optpath_$tag.csv"),
     (
         p = pss,
         cost = losses,
@@ -63,7 +63,7 @@ CSV.write(
 )
 
 CSV.write(
-    joinpath(basepath, runid, "same_as_v1_opt_or.csv"),
+    joinpath(basepath, runid, "data_grid_opt_$tag.csv"),
     (
         p = ps,
         ql = map(x -> x.ql, pred),
