@@ -269,11 +269,7 @@ function train_on_data(
 
     params = if use_nn
         global re_ql
-        nnps_ql, re_ql = if fluid_net
-            create_net_fluidmodel(params)
-        else
-            create_net(size(params.A, 1), hidden_units, hidden_layers, flowconstrained, modelconstrained)
-        end
+        nnps_ql, re_ql = create_net(size(params.A, 1), hidden_units, hidden_layers, flowconstrained, modelconstrained)
 
         optf = OptimizationFunction(use_fluid ? loss_ql_both : loss_ql_nn, Optimization.AutoForwardDiff())
 
