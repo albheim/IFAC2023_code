@@ -42,63 +42,45 @@ function create_net(n_phases, hidden_units, hidden_layers, flowconstrained, mode
     net = Chain(
         Dense(n_phases + 2, hidden_units, elu),
         [Dense(hidden_units, hidden_units, elu) for i in 1:hidden_layers]...,
-        Dense(hidden_units, n_phases),
         if flowconstrained
-            (x -> x .- mean(x),)
+            (
+                Dense(hidden_units, n_phases), 
+                x -> x .- mean(x),
+            )
         elseif modelconstrained
-            (create_constrained_flow,)
+            (
+                # Hardcoded by hand for now
+                Dense(hidden_units, n_phases+1), 
+                create_constrained_flow,
+            )
         else
-            ()
+            (Dense(hidden_units, n_phases),)
         end...,
     )
     Flux.destructure(net)
 end
 
-struct SplitCombineLayer{F}
-    chain1::Chain
-    chain2::Chain
-    n1::Int
-    combine::F
+function find_flow_structure(W; eps=0.1)
+    n_phase = size(W, 1)
+    weight_indices = []
+    W[abs.(W) .< eps] .= 0
+    for k in axes(W', 2)
+
+    end
+
+    n_flow = sum(x -> x > eps ? x : 0, eachrow(W))
+
+    function (x)
+        [
+
+        ]
+    end
 end
-function (m::SplitCombineLayer)(x)
-    #m.combine(m.chain1(x[1:m.n1]), m.chain2(x[m.n1+1:end]))
-    m.combine(m.chain1(x), m.chain2(x))
-end
-Flux.@functor SplitCombineLayer
-struct SkipLayer{F}
-    chain::Chain
-    combine::F
-end
-function (m::SkipLayer)(x)
-    m.combine(m.chain(x), x)
-end
-Flux.@functor SkipLayer
-function create_net_flowconserving2(params)
-    n_phases = size(params.A, 1)
-    net = SplitCombineLayer(
-        Chain(
-            Dense(2, 10, elu),
-            Dense(10, n_phases*n_phases),
-            x -> reshape(x, n_phases, n_phases),
-            x -> x .- mean(x, dims=1),
-        ),
-        Chain(
-            SkipLayer(
-                Chain(
-                    Dense(n_phases, 5, elu), # 5 is nq
-                    Dense(5, n_phases, sigmoid),
-                ),
-                .*
-            )
-        ),
-        2, *
-    )
-    Flux.destructure(net)
-end
+
 create_constrained_flow(x) = [
     -x[1]
     x[1] - x[2]
-    x[2] - x[3]
+    x[2] - x[3] - x[25]
     x[18] + x[24] - x[4]
     x[4] - x[5]
     x[5] - x[6]
@@ -108,29 +90,19 @@ create_constrained_flow(x) = [
     x[21] - x[10]
     x[10] - x[11]
     x[11] - x[12]
-    x[3]/3 - x[13]
+    x[3] - x[13]
     x[13] - x[14]
     x[14] - x[15]
     x[9] - x[16]
     x[16] - x[17]
     x[17] - x[18]
-    x[3]*2/3 - x[19]
+    x[25] - x[19]
     x[19] - x[20]
     x[20] - x[21]
     x[12] - x[22]
     x[22] - x[23]
     x[23] - x[24]
 ]
-function create_net_flowconserving3(params)
-    n_phases = size(params.A, 1)
-    net = Chain(
-        Dense(n_phases+2, 10, elu),
-        Dense(10, 10, elu),
-        Dense(10, n_phases+1, softplus),
-        create_constrained_flow,
-    )
-    Flux.destructure(net)
-end
 
 function callback(ps, l)
     t = time()
