@@ -2,9 +2,9 @@ include("train_grid.jl")
 
 p_train = 0.6
 
-tag="v1"
+tag="fix_mc"
 
-params = train_point_and_eval_grid(p_train, 0.1:0.2:1.0; ql_maxiters=500, use_fluid=true, use_nn=true, modelconstrained=true, hidden_units=20, hidden_layers=2, tag, seed=1)
+params = train_point_and_eval_grid(p_train, 0.1:0.2:1.0; ql_maxiters=500, use_fluid=true, use_nn=true, modelconstrained=true, flowconstrained=false, hidden_units=20, hidden_layers=2, tag, seed=1)
 
 losses = []
 pss = []

@@ -3,34 +3,24 @@ using PyPlot, CSV
 basepath = joinpath(@__DIR__, "..", "data")
 runid = "logs"
 
-datatag = "fluid_only_retrain"
+datatag = "real"
 realdata = CSV.File(joinpath(basepath, runid, "data_$(datatag).csv"))
 
 tags = [
-    #"fluid_only_06_nohist", 
-    #"fluid_nn_06_nohist", 
-    #"fluid_nn_06_hist_1to65", 
-    #"fluid_only_06_hist_01_step_02_test_nnfluidflags",
-    #"nn_only_06_hist_01_step_02_test_nnfluidflags",
-    "fluid_nnfc_hu20_hl0_p0.6_hist0.1:0.2:0.9_test_new",
-    #"fluid_nnfc_hu20_hl0_mi300_p0.6_hist0.1:0.2:0.9_normal_long",
-    #"fluid_nnfc_hu10_hl5_mi300_p0.6_hist0.1:0.2:0.9_deep_small_long",
-    #"fluid_nnfc_hu20_hl0_mi30_p0.6_hist0.1:0.2:0.9_normal",
-    "nn_hu30_hl2_mi300_p0.6_hist0.1:0.2:0.9_test_only_large_nn",
-    #"fluid_nn_06_hist_01_step_02_test_fancynet",
-    #"fluid_nn_06_hist_01_step_02_test_simple",
-    #"fluid_nn_06_hist_01_step_02_largenet_more_train",
-    #"fluid_nn_03_hist_0_03", 
-    #"fluid_only_07_nohist", 
-    #"fluid_only_03_nohist", 
-    "fluid_nn_hu20_hl0_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "nn_hu20_hl0_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "fluid_nnfc_hu20_hl0_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "fluid_nnmc_hu20_hl0_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "fluid_nn_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "nn_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "fluid_nnfc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
-    "fluid_nnmc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_for_paper_v1",
+    "fluid_nn_hu20_hl2_mi1500_longer",
+    "nn_hu20_hl2_mi1500_longer",
+    "fluid_nnmc_hu20_hl2_mi1500_longer",
+    "fluid_nnmc_hu20_hl2_mi1500_longer",
+    "fluid_nnmc_hu20_hl2_mi500_fix_mc",
+    #"fluid_nn_hu40_hl3_mi1000_long_and_big",
+    #"nn_hu40_hl3_mi1000_long_and_big",
+    #"fluid_nnmc_hu40_hl3_mi500_long_and_big",
+    #"fluid_nn_hu20_hl2_mi500_v1_i1",
+    #"fluid_nnfc_hu20_hl2_mi500_v1_i1",
+    #"fluid_nnmc_hu20_hl2_mi500_v1_i1",
+    #"nn_hu20_hl2_mi500_v1_i1",
+    "fluid_nnmc_hu10_hl1_mi100_test_ouput",
+    "fluid_v1",
 ]
 datas = [CSV.File(joinpath(basepath, runid, "data_$(tag).csv")) for tag in tags]
 
@@ -123,11 +113,18 @@ basepath = joinpath(@__DIR__, "..", "data")
 runid = "logs"
 
 tags = [
-    "fluid_nnmc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_v1_i1",
-    "fluid_nnmc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_v1_i2",
-    "fluid_nnmc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_v1_i3",
-    "fluid_nnmc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_v1_i4",
-    "fluid_nnmc_hu20_hl2_mi500_p0.6_hist0.1:0.2:0.9_v1_i5",
+    "fluid_nn_hu20_hl2_mi1500_longer",
+    "nn_hu20_hl2_mi1500_longer",
+    "fluid_nnmc_hu20_hl2_mi1500_longer",
+    "fluid_nn_hu40_hl3_mi1000_long_and_big",
+    "nn_hu40_hl3_mi1000_long_and_big",
+    "fluid_nnmc_hu40_hl3_mi500_long_and_big",
+    "fluid_nnmc_hu20_hl2_mi500_fix_mc",
+    "fluid_nnmc_hu20_hl2_mi1500_fix_mc",
+    #"fluid_nn_hu20_hl2_mi500_v1_i1",
+    #"fluid_nnfc_hu20_hl2_mi500_v1_i1",
+    #"fluid_nnmc_hu20_hl2_mi500_v1_i1",
+    "nn_hu20_hl2_mi500_v1_i1",
 ]
     
 datas = [CSV.File(joinpath(basepath, runid, "data_$(tag)_timingdata.csv")) for tag in tags]

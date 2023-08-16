@@ -1,21 +1,18 @@
 using PyPlot, CSV, Statistics
 
 basepath = joinpath(@__DIR__, "..", "data")
-runid = "logs_grid_p05_no_edge"
+runid = "logs"
 
 tags = [
-    #"fluid_nnfc_hu10_hl0_mi200_p0.6_hist0.1:0.2:0.9_mean_check",
-    #"fluid_nn_hu10_hl0_mi200_p0.6_hist0.1:0.2:0.9_mean_check",
-    #"nn_hu10_hl0_mi200_p0.6_hist0.1:0.2:0.9_mean_check",
-    #"fluid_nnfc_hu30_hl1_mi200_p0.6_hist0.1:0.2:0.9_mean_check",
-    #"fluid_nn_hu30_hl1_mi200_p0.6_hist0.1:0.2:0.9_mean_check",
-    #"nn_hu30_hl1_mi200_p0.6_hist0.1:0.2:0.9_mean_check",
-    "fluid_nnfc_hu20_hl0_mi200_p0.6_hist0.1:0.2:0.9_mean_check",
-    "fluid_nn_hu20_hl0_mi200_p0.6_hist0.1:0.2:0.9_mean_check",
-    "nn_hu20_hl0_mi200_p0.6_hist0.1:0.2:0.9_mean_check",
-    "fluid_nnfc_hu20_hl1_mi200_p0.6_hist0.1:0.2:0.9_mean_check",
-    "fluid_nn_hu20_hl1_mi200_p0.6_hist0.1:0.2:0.9_mean_check",
-    "nn_hu20_hl1_mi200_p0.6_hist0.1:0.2:0.9_mean_check",
+    #"fluid_nn_hu20_hl0_mi500_v1",
+    "fluid_nn_hu20_hl2_mi500_v1",
+    #"fluid_nnfc_hu20_hl0_mi500_v1",
+    "fluid_nnfc_hu20_hl2_mi500_v1",
+    #"fluid_nnmc_hu20_hl0_mi500_v1",
+    "fluid_nnmc_hu20_hl2_mi500_v1",
+    #"nn_hu20_hl0_mi500_v1",
+    "nn_hu20_hl2_mi500_v1",
+    "fluid_nnmc_hu20_hl2_mi500_fix_mc",
 ]
 datas = [
     begin
